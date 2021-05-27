@@ -1,19 +1,17 @@
 import { Component } from 'react'
 
-class Main extends Component {
+class Outfits extends Component {
   constructor(props) {
     super(props)
   }
 
   render() {
     return(
-      <>
         <div>
-          <h1>Main Component</h1>
+          <h1>Outfits</h1>
         </div>
-      </>
     )
   }
 }
 
-export default Main;
+export default Outfits;

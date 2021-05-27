@@ -28,15 +28,14 @@ class Header extends Component {
 
   render() {
     return(
-      <Router>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="/home">Personal Wardrobe</Navbar.Brand>
+            <Navbar.Brand as={Link} to="/home">Personal Wardrobe</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link as={Link} to="/items/?purchased=false">Wish List</Nav.Link>
-                <Nav.Link as={Link} to="/items/?purchased=true">Your Wardrobe</Nav.Link>
+                <Nav.Link as={Link} to="/wishlist">Wish List</Nav.Link>
+                <Nav.Link as={Link} to="/wardrobe">Your Wardrobe</Nav.Link>
                 <Nav.Link as={Link} to="/outfits">Outfits</Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -60,10 +59,8 @@ class Header extends Component {
                 </NavDropdown>
               </Navbar.Collapse>
             }
-
           </Container>
         </Navbar>
-      </Router>
     )
   }
 }
