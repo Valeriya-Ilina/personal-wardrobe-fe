@@ -1,12 +1,29 @@
 import { Component } from 'react'
 import { Navbar, Nav, NavDropdown, Container, NavText, Button } from 'react-bootstrap';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
-import LoginRegister from './LoginRegister'
+import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
 
+let baseURL = 'http://127.0.0.1:8000'
 
 class Header extends Component {
   constructor(props) {
     super(props)
+  }
+
+  logoutUser = async () => {
+    const url = baseURL + '/api/v1/users/logout'
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: "include"
+      })
+      if (response.status === 200) {
+        console.log("USER IS LOGGED OUT")
+        this.props.changeLoggedInStatus()
+      }
+    }
+    catch (err) {
+      console.log('Error => ', err)
+    }
   }
 
   render() {
@@ -23,50 +40,29 @@ class Header extends Component {
                 <Nav.Link as={Link} to="/outfits">Outfits</Nav.Link>
               </Nav>
             </Navbar.Collapse>
-            <Navbar.Collapse className="justify-content-end">
-              <NavDropdown title="Sign In" id="collasible-nav-dropdown" menuVariant='dark'>
-                <div className="d-grid gap-2">
-                  <Button variant="secondary">Sign In</Button>
-                </div>
-                <NavDropdown.Divider />
-                <p>Don't have an account?
-                  <a href="#">Register</a>
-                </p>
-              </NavDropdown>
-            </Navbar.Collapse>
+
+            {
+              this.props.loggedIn ?
+              <>
+                Username
+                <Link onClick={this.logoutUser}>Logout</Link>
+              </>
+              :
+              <Navbar.Collapse className="justify-content-end">
+                <NavDropdown title="Sign In" id="collasible-nav-dropdown" menuVariant='dark'>
+                  <div className="d-grid gap-2">
+                    <Button href="/login" variant="secondary">Sign In</Button>
+                  </div>
+                  <NavDropdown.Divider />
+                  <p>Don't have an account?
+                    <a href="/register">Register</a>
+                  </p>
+                </NavDropdown>
+              </Navbar.Collapse>
+            }
+
           </Container>
         </Navbar>
-
-        <Switch>
-          <Route exact path="/">
-            { this.props.loggedIn ?
-              <Redirect to="/items/?purchased=false" />
-              :
-              <Redirect to="/home" />
-            }
-          </Route>
-          <Route path="/login">
-            { this.props.loggedIn ?
-              <Redirect to="/items/?purchased=false" />
-              :
-              <LoginRegister userIntention="login"/>
-            }
-          </Route>
-          <Route path="/register">
-            { this.props.loggedIn ?
-              <Redirect to="/items/?purchased=false" />
-              :
-              <LoginRegister userIntention="register" />
-            }
-          </Route>
-          <Route path="/home">
-            { this.props.loggedIn ?
-              <Redirect to="/items/?purchased=false" />
-              :
-              <Redirect to="/home" />
-            }
-          </Route>
-        </Switch>
       </Router>
     )
   }
