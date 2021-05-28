@@ -17,8 +17,13 @@ class App extends Component {
 
     this.state = {
       loggedIn: false,
-      items: []
+      items: [],
+      categories: []
     }
+  }
+
+  componentDidMount() {
+    this.getCategories()
   }
 
   changeLoggedInStatus = () => {
@@ -47,6 +52,28 @@ class App extends Component {
       console.log('Error => ', err)
     }
   }
+
+  getCategories = async () => {
+    const url = baseURL + '/api/v1/categories/'
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: "include"
+      })
+      // convert response to json
+      const categories = await response.json()
+
+      if (response.status === 200) {
+        this.setState({
+          categories: categories.data
+        })
+      }
+    }
+    catch (err) {
+      console.log('Error => ', err)
+    }
+  }
+
 
 
   render() {
@@ -83,14 +110,14 @@ class App extends Component {
               </Route>
               <Route path="/wishlist">
                 { this.state.loggedIn ?
-                  <ItemsWishList items={this.state.items} getItems={this.getItems} purchased={false}/>
+                  <ItemsWishList items={this.state.items} categories={this.state.categories} getItems={this.getItems} purchased={false}/>
                   :
                   <Redirect to="/login" />
                 }
               </Route>
               <Route path="/wardrobe">
                 { this.state.loggedIn ?
-                  <ItemsWardrobeList items={this.state.items} getItems={this.getItems} purchased={true}/>
+                  <ItemsWardrobeList items={this.state.items} categories={this.state.categories} getItems={this.getItems} purchased={true}/>
                   :
                   <Redirect to="/login" />
                 }
