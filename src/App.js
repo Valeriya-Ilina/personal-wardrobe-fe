@@ -2,18 +2,22 @@ import './App.css';
 import { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Home from './components/Home'
-import Items from './components/Items'
+import ItemsWishList from './components/ItemsWishList'
+import ItemsWardrobeList from './components/ItemsWardrobeList'
 import Outfits from './components/Outfits'
 import LoginRegister from './components/LoginRegister'
 import Header from './components/Header'
 import Footer from './components/Footer'
+
+let baseURL = 'http://127.0.0.1:8000'
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      items: []
     }
   }
 
@@ -23,8 +27,30 @@ class App extends Component {
     })
   }
 
+  getItems = async () => {
+    const url = baseURL + '/api/v1/items/'
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: "include"
+      })
+      // convert response to json
+      const items = await response.json()
+
+      if (response.status === 200) {
+        this.setState({
+          items: items.data
+        })
+      }
+    }
+    catch (err) {
+      console.log('Error => ', err)
+    }
+  }
+
+
   render() {
-    console.log(this.state.loggedIn)
+    console.log(this.state)
     return (
       <Router>
         <div className="App">
@@ -57,14 +83,14 @@ class App extends Component {
               </Route>
               <Route path="/wishlist">
                 { this.state.loggedIn ?
-                  <Items purchased={false}/>
+                  <ItemsWishList items={this.state.items} getItems={this.getItems} purchased={false}/>
                   :
                   <Redirect to="/login" />
                 }
               </Route>
               <Route path="/wardrobe">
                 { this.state.loggedIn ?
-                  <Items purchased={true}/>
+                  <ItemsWardrobeList items={this.state.items} getItems={this.getItems} purchased={true}/>
                   :
                   <Redirect to="/login" />
                 }

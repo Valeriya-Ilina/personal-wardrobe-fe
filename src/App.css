@@ -8,3 +8,8 @@
   margin-top: 1rem;
   width: 100%;
 }
+
+.item {
+  width: 100px;
+  height: 100px;
+}
