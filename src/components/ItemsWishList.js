@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { Button, Offcanvas, Form, FloatingLabel } from 'react-bootstrap';
+import CreatableSelectInput from './CreatableSelectInput'
 
 class ItemsWishList extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class ItemsWishList extends Component {
                         }
                       </datalist>
                     </FloatingLabel>
+                    <CreatableSelectInput categories={this.props.categories} handleCategoryChange={this.handleCategoryChange}/>
                     <Button variant="primary" type="submit">Submit</Button>
                   </Form>
                 </Offcanvas.Body>

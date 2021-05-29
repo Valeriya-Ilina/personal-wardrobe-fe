@@ -12,3 +12,13 @@
   width: 100px;
   height: 100px;
 }
+
+/* custom styles for form elements */
+.creatable-select > div {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.creatable-select > div > div > div {
+  color: black;
+}
