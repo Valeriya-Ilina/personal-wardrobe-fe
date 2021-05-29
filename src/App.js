@@ -74,6 +74,30 @@ class App extends Component {
     }
   }
 
+  createCategory = async (category_name) => {
+    const url = baseURL + '/api/v1/categories/'
+    try {
+      const categoryBody = {
+          "name": category_name
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(categoryBody),
+        credentials: "include"
+      })
+
+      if (response.status === 201) {
+        this.getCategories()
+      }
+    }
+    catch (err) {
+      console.log('Error => ', err)
+    }
+  }
+
 
 
   render() {
@@ -110,14 +134,14 @@ class App extends Component {
               </Route>
               <Route path="/wishlist">
                 { this.state.loggedIn ?
-                  <ItemsWishList items={this.state.items} categories={this.state.categories} getItems={this.getItems} purchased={false}/>
+                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems}  purchased={false}/>
                   :
                   <Redirect to="/login" />
                 }
               </Route>
               <Route path="/wardrobe">
                 { this.state.loggedIn ?
-                  <ItemsWardrobeList items={this.state.items} categories={this.state.categories} getItems={this.getItems} purchased={true}/>
+                  <ItemsWardrobeList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems}  purchased={true}/>
                   :
                   <Redirect to="/login" />
                 }
