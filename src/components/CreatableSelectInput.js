@@ -20,16 +20,25 @@ class CreatableSelectInput extends Component {
       }
       return option
     })
+    console.log(this.props.category_name)
 
+    // get index of category from options array of objects, so we can use to render value
+    const findIndex = options.findIndex(option => {
+      console.log(option.label)
+      return option.label === this.props.category_name
+    })
+    console.log(findIndex)
+
+    console.log(this.state)
     return (
       <CreatableSelect
         isClearable
         onChange={this.handleChange}
-        onInputChange={this.handleInputChange}
         options={options}
         placeholder="Enter or select Category... *"
         className="mb-3 creatable-select"
         id="category"
+        value={options[findIndex]}
       />
     )
   }

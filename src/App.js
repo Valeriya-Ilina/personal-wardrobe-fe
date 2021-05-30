@@ -40,11 +40,11 @@ class App extends Component {
         credentials: "include"
       })
       // convert response to json
-      const items = await response.json()
+      const jsonResponse = await response.json()
 
       if (response.status === 200) {
         this.setState({
-          items: items.data
+          items: jsonResponse.data
         })
       }
     }
@@ -61,11 +61,11 @@ class App extends Component {
         credentials: "include"
       })
       // convert response to json
-      const categories = await response.json()
+      const jsonResponse = await response.json()
 
       if (response.status === 200) {
         this.setState({
-          categories: categories.data
+          categories: jsonResponse.data
         })
       }
     }
@@ -89,9 +89,15 @@ class App extends Component {
         credentials: "include"
       })
 
+      // convert response to json
+      const json_response = await response.json()
+
       if (response.status === 201) {
         this.getCategories()
       }
+
+      return json_response.data
+
     }
     catch (err) {
       console.log('Error => ', err)
