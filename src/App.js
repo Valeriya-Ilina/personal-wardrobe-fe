@@ -53,6 +53,17 @@ class App extends Component {
     }
   }
 
+  deleteItemFromState = (id) => {
+    const findIndex = this.state.items.findIndex(item => item.id === id)
+    console.log(findIndex)
+    let copyItems = [...this.state.items]
+    copyItems.splice(findIndex, 1)
+
+    this.setState({
+      items: copyItems
+    })
+  }
+
   getCategories = async () => {
     const url = baseURL + '/api/v1/categories/'
     try {
@@ -140,7 +151,7 @@ class App extends Component {
               </Route>
               <Route path="/wishlist">
                 { this.state.loggedIn ?
-                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems}  purchased={false}/>
+                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems}  purchased={false} deleteItemFromState={this.deleteItemFromState} />
                   :
                   <Redirect to="/login" />
                 }

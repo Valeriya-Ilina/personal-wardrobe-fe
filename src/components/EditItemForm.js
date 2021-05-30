@@ -92,6 +92,24 @@ class EditItemForm extends Component {
     }
   }
 
+  deleteItem = async (id) => {
+    console.log("DELETING ITEM with id " + id)
+    const url = baseURL + '/api/v1/items/' + id
+    try {
+      const response = await fetch( url, {
+        method: 'DELETE',
+        credentials: "include"
+      })
+      if (response.status===200){
+        this.props.handleClose()
+        this.props.deleteItemFromState(id)
+      }
+    }
+    catch(err){
+      console.log('Error =>', err)
+    }
+  }
+
   handleEditChange = (event) => {
     const target = {...this.props.itemCurrentlyBeingEdited}
     const source = {
@@ -152,7 +170,7 @@ class EditItemForm extends Component {
           <div>* is a required field</div>
         </Form.Text>
         <Button variant="success" type="submit">Submit</Button>
-        {/*<Button variant="danger">Delete Item</Button> : ""*/}
+        <Button onClick={ ()=>this.deleteItem(this.props.itemCurrentlyBeingEdited?.id) } variant="danger">Delete Item</Button>
         <p>{this.state.formSubmitStatus}</p>
       </Form>
     )

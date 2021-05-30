@@ -72,7 +72,7 @@ class ItemsWishList extends Component {
 
 
         <div>
-          <SideMenu showOffcanvas={this.state.showOffcanvas} getItems={this.props.getItems} handleClose={this.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} editItem={this.editItem}/>
+          <SideMenu showOffcanvas={this.state.showOffcanvas} getItems={this.props.getItems} handleClose={this.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} editItem={this.editItem} items={this.props.items} deleteItemFromState={this.props.deleteItemFromState} />
         </div>
 
 

@@ -28,9 +28,9 @@ class SideMenu extends Component {
           <Offcanvas.Body>
             {
               this.props.itemCurrentlyBeingEdited ?
-              <EditItemForm handleClose={this.props.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} getItems={this.props.getItems} itemCurrentlyBeingEdited={this.props.itemCurrentlyBeingEdited} editItem={this.props.editItem}/>
+              <EditItemForm handleClose={this.props.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} getItems={this.props.getItems} itemCurrentlyBeingEdited={this.props.itemCurrentlyBeingEdited} editItem={this.props.editItem} deleteItemFromState={this.props.deleteItemFromState}/>
               :
-              <NewItemForm handleClose={this.props.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} getItems={this.props.getItems} />
+              <NewItemForm handleClose={this.props.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} getItems={this.props.getItems} items={this.props.items} />
             }
 
           </Offcanvas.Body>
