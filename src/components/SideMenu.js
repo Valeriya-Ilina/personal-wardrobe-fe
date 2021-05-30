@@ -4,13 +4,6 @@ import NewItemForm from './NewItemForm'
 import EditItemForm from './EditItemForm'
 
 class SideMenu extends Component {
-  constructor(props) {
-    super(props)
-
-    // this.state = {
-    //
-    // }
-  }
 
   render() {
     console.log(this.state)

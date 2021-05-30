@@ -1,13 +1,10 @@
 import { Component } from 'react'
-import { Navbar, Nav, NavDropdown, Container, NavText, Button } from 'react-bootstrap';
-import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap';
+import { BrowserRouter as Link } from "react-router-dom";
 
 let baseURL = 'http://127.0.0.1:8000'
 
 class Header extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   logoutUser = async () => {
     const url = baseURL + '/api/v1/users/logout'

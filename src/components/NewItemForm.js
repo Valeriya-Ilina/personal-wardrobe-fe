@@ -59,26 +59,20 @@ class NewItemForm extends Component {
       return
     }
 
-    console.log(this.state.category_id)
-    console.log(this.state.category_name)
     // check if category already exists
     if(!this.state.category_id) {
       // add new category in the db
       console.log("CREATING NEW CATEGORY")
       const createdCategory = await this.props.createCategory(this.state.category_name)
       const category_id = createdCategory.id
-      console.log(category_id)
       this.setState({
         category_id: category_id
       })
     }
 
     // continue adding new item using existing category
-    console.log("NOW CREATING A NEW ITEM")
+    console.log("CREATING A NEW ITEM")
     const responseStatus = await this.createItem()
-
-    // console.log("EDITING EXISTING ITEM")
-    // const responseStatus = await this.updateItem()
 
     // close side bar if item was created (201) or edited (200) successfully
     if (responseStatus === 200 || responseStatus === 201) {

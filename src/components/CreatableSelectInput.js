@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-
 import CreatableSelect from 'react-select/creatable';
 
 
 class CreatableSelectInput extends Component {
-  constructor(props) {
-    super(props)
-  }
 
-  handleChange = (newValue, actionMeta) => {
+  handleChange = (newValue) => {
     this.props.handleCategoryChange(newValue?.value.toLowerCase())
   }
 
@@ -20,16 +16,12 @@ class CreatableSelectInput extends Component {
       }
       return option
     })
-    console.log(this.props.category_name)
 
-    // get index of category from options array of objects, so we can use to render value
+    // get index of category from options array of objects, so we can use it to render value
     const findIndex = options.findIndex(option => {
-      console.log(option.label)
       return option.label === this.props.category_name
     })
-    console.log(findIndex)
 
-    console.log(this.state)
     return (
       <CreatableSelect
         isClearable
@@ -43,6 +35,5 @@ class CreatableSelectInput extends Component {
     )
   }
 }
-
 
 export default CreatableSelectInput;

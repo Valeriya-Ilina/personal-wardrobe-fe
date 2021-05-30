@@ -55,7 +55,6 @@ class App extends Component {
 
   deleteItemFromState = (id) => {
     const findIndex = this.state.items.findIndex(item => item.id === id)
-    console.log(findIndex)
     let copyItems = [...this.state.items]
     copyItems.splice(findIndex, 1)
 

@@ -24,7 +24,6 @@ class EditItemForm extends Component {
         "brand": this.props.itemCurrentlyBeingEdited.brand,
         "category_id": this.props.itemCurrentlyBeingEdited.category_id.id
       }
-      console.log(itemBody)
 
       const response = await fetch(url, {
         method: 'PUT',
@@ -54,14 +53,11 @@ class EditItemForm extends Component {
       return
     }
 
-    console.log(this.props.itemCurrentlyBeingEdited.category_id.id)
-    console.log(this.props.itemCurrentlyBeingEdited.category_id.name)
     // check if category already exists
     if(!this.props.itemCurrentlyBeingEdited.category_id.id) {
       // add new category in the db
       console.log("CREATING NEW CATEGORY")
       const createdCategory = await this.props.createCategory(this.props.itemCurrentlyBeingEdited.category_id.name)
-      console.log(createdCategory)
 
       const updatedItemCurrentlyBeingEdited = {
         ...this.props.itemCurrentlyBeingEdited,
@@ -72,10 +68,6 @@ class EditItemForm extends Component {
       }
 
       this.props.editItem(updatedItemCurrentlyBeingEdited)
-
-      // this.setState({
-      //   category_id: category_id
-      // })
     }
 
     console.log("EDITING EXISTING ITEM")
@@ -111,10 +103,8 @@ class EditItemForm extends Component {
   }
 
   handleEditChange = (event) => {
-    const target = {...this.props.itemCurrentlyBeingEdited}
-    const source = {
-      [event.target.id]: event.target.value
-    }
+    const target = { ...this.props.itemCurrentlyBeingEdited }
+    const source = { [event.target.id]: event.target.value }
     const newItemCurrentlyBeingEdited = Object.assign(target, source)
 
     this.props.editItem(newItemCurrentlyBeingEdited)

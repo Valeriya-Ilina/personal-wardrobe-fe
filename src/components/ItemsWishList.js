@@ -1,9 +1,6 @@
 import { Component } from 'react'
-import { Button, Offcanvas, Form, FloatingLabel } from 'react-bootstrap';
-import CreatableSelectInput from './CreatableSelectInput'
+import { Button } from 'react-bootstrap';
 import SideMenu from './SideMenu'
-
-let baseURL = 'http://127.0.0.1:8000'
 
 class ItemsWishList extends Component {
   constructor(props) {
@@ -26,7 +23,6 @@ class ItemsWishList extends Component {
     })
   }
 
-
   // Offcanvas methods (side menu)
   setShow = (boolean) => {
     this.setState({
@@ -36,7 +32,6 @@ class ItemsWishList extends Component {
 
   handleClose = () => {
     this.setShow(false)
-
     // clear form
     this.setState({
       itemCurrentlyBeingEdited: null
@@ -59,7 +54,7 @@ class ItemsWishList extends Component {
             wishListItems.map((item, idx) => {
               return (
                 <div key={idx}>
-                  <img class='item' src={item.imageUrl} />
+                  <img class='item' src={item.imageUrl} alt={item.name} />
                   <p>${item.price}</p>
                   <a href={item.itemInStoreUrl}>Go to store</a>
                   <button onClick={()=>this.editItem(item)}>Edit</button>
@@ -67,15 +62,12 @@ class ItemsWishList extends Component {
               )
             })
           }
-          <Button onClick={this.handleShow}><img src="https://icons-for-free.com/iconfiles/png/512/circle+create+new+plus+sign+icon-1320085936892806512.png" class='add-item-btn'/></Button>
+          <Button onClick={this.handleShow}><img src="https://icons-for-free.com/iconfiles/png/512/circle+create+new+plus+sign+icon-1320085936892806512.png" alt="Add new item button" class='add-item-btn'/></Button>
         </div>
-
 
         <div>
           <SideMenu showOffcanvas={this.state.showOffcanvas} getItems={this.props.getItems} handleClose={this.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} editItem={this.editItem} items={this.props.items} deleteItemFromState={this.props.deleteItemFromState} />
         </div>
-
-
       </>
     )
   }
