@@ -18,7 +18,8 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       items: [],
-      categories: []
+      categories: [],
+      categoriesWithItems: []
     }
   }
 
@@ -42,9 +43,28 @@ class App extends Component {
       // convert response to json
       const jsonResponse = await response.json()
 
+      // get unique category names
+      const uniqueCategories = [...new Set(jsonResponse.data.map(item => item.category_id.name))]
+
+      // populate array with unique category names and items that belong to these categories
+      let categoriesWithItems = []
+      categoriesWithItems = uniqueCategories.map(category => {
+        let itemsBelongToCategory = []
+        jsonResponse.data.map(item => {
+          if (item.category_id.name === category) {
+            itemsBelongToCategory.push(item)
+          }
+        })
+        return {
+          category_name: category,
+          items: itemsBelongToCategory
+        }
+      })
+
       if (response.status === 200) {
         this.setState({
-          items: jsonResponse.data
+          // items: jsonResponse.data,
+          categoriesWithItems: categoriesWithItems
         })
       }
     }
@@ -150,7 +170,7 @@ class App extends Component {
               </Route>
               <Route path="/wishlist">
                 { this.state.loggedIn ?
-                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems}  purchased={false} deleteItemFromState={this.deleteItemFromState} />
+                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems} categoriesWithItems={this.state.categoriesWithItems} purchased={false} deleteItemFromState={this.deleteItemFromState} />
                   :
                   <Redirect to="/login" />
                 }

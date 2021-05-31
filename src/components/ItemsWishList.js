@@ -45,12 +45,22 @@ class ItemsWishList extends Component {
 
   render() {
     console.log(this.state)
-    const wishListItems = this.props.items.filter(item => !item.is_purchased)
+    // filter categories with items that are not purchased
+    const categoriesWithItemsWishList = []
+    this.props.categoriesWithItems.forEach(category => {
+      const itemsNotPurchased = !!category.items.find(item => !item.is_purchased)
+       if (itemsNotPurchased) {
+         const items = category.items.filter(item => !item.is_purchased)
+         categoriesWithItemsWishList.push({...category, items})
+       }
+    })
+
+
     return(
       <>
         <div>
           <h1>Wish list items</h1>
-          {
+          {/*{
             wishListItems.map((item, idx) => {
               return (
                 <div key={idx}>
@@ -61,12 +71,13 @@ class ItemsWishList extends Component {
                 </div>
               )
             })
-          }
+          }*/}
+
           <Button onClick={this.handleShow}><img src="https://icons-for-free.com/iconfiles/png/512/circle+create+new+plus+sign+icon-1320085936892806512.png" alt="Add new item button" class='add-item-btn'/></Button>
         </div>
 
         <div>
-          <SideMenu showOffcanvas={this.state.showOffcanvas} getItems={this.props.getItems} handleClose={this.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} editItem={this.editItem} items={this.props.items} deleteItemFromState={this.props.deleteItemFromState} />
+          <SideMenu showOffcanvas={this.state.showOffcanvas} getItems={this.props.getItems} handleClose={this.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} editItem={this.editItem}  deleteItemFromState={this.props.deleteItemFromState} />
         </div>
       </>
     )
