@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Button } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 import SideMenu from './SideMenu'
 
 class ItemsWishList extends Component {
@@ -58,31 +58,36 @@ class ItemsWishList extends Component {
 
     return(
       <>
-        <div>
+        <div class="items-wish-list-container">
           <h1>Wish list items</h1>
+          <Button onClick={this.handleShow} id="add-new-item-btn">Add New Item</Button>
           {
             categoriesWithItemsWishList.map((category, idx) => {
               return (
-                <div key={idx}>
-                  <h3>{category.category_name}</h3>
-                  {
-                    category.items.map((item) => {
-                      return (
-                        <>
-                          <img class='item' src={item.imageUrl} alt={item.name} />
-                          <p>${item.price}</p>
-                          <a href={item.itemInStoreUrl}>Go to store</a>
-                          <button onClick={()=>this.editItem(item)}>Edit</button>
-                        </>
-                      )
-                    })
-                  }
-                </div>
+                <Container>
+                  <Row>
+                    <div key={idx}>
+                      <h3>{category.category_name}</h3>
+                      <div class="category-items">
+                      {
+                        category.items.map((item) => {
+                          return (
+                            <div class="item">
+                              <img class='item-image' src={item.imageUrl} alt={item.name} />
+                              <p>${item.price}</p>
+                              <a href={item.itemInStoreUrl}>Go to store</a>
+                              <button onClick={()=>this.editItem(item)}>Edit</button>
+                            </div>
+                          )
+                        })
+                      }
+                      </div>
+                    </div>
+                  </Row>
+                </Container>
               )
             })
           }
-
-          <Button onClick={this.handleShow}><img src="https://icons-for-free.com/iconfiles/png/512/circle+create+new+plus+sign+icon-1320085936892806512.png" alt="Add new item button" class='add-item-btn'/></Button>
         </div>
 
         <div>

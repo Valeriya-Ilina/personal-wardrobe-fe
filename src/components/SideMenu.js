@@ -6,7 +6,6 @@ import EditItemForm from './EditItemForm'
 class SideMenu extends Component {
 
   render() {
-    console.log(this.state)
     return(
       <>
         <Offcanvas show={this.props.showOffcanvas} onHide={this.props.handleClose} key='end' placement='end' name='end'>

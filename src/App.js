@@ -74,12 +74,17 @@ class App extends Component {
   }
 
   deleteItemFromState = (id) => {
-    const findIndex = this.state.items.findIndex(item => item.id === id)
-    let copyItems = [...this.state.items]
-    copyItems.splice(findIndex, 1)
+    let copyArray = [...this.state.categoriesWithItems]
+    for (const category of copyArray) {
+      const findIndex = category.items.findIndex(item => item.id === id)
+      if (findIndex != -1) {
+        category.items.splice(findIndex, 1)
+        break
+      }
+    }
 
     this.setState({
-      items: copyItems
+      categoriesWithItems: copyArray
     })
   }
 
