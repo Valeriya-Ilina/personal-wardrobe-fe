@@ -64,15 +64,15 @@ class ItemsWishList extends Component {
           {
             categoriesWithItemsWishList.map((category, idx) => {
               return (
-                <Container>
+                <Container key={idx}>
                   <Row>
-                    <div key={idx}>
+                    <div>
                       <h3>{category.category_name}</h3>
                       <div class="category-items">
                       {
-                        category.items.map((item) => {
+                        category.items.map((item, idx) => {
                           return (
-                            <div class="item">
+                            <div class="item" key={idx} >
                               <img class='item-image' src={item.imageUrl} alt={item.name} />
                               <p>${item.price}</p>
                               <a href={item.itemInStoreUrl}>Go to store</a>
