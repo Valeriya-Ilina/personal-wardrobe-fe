@@ -175,8 +175,8 @@ class EditItemForm extends Component {
           defaultChecked={this.props.itemCurrentlyBeingEdited?.is_purchased}
           onChange= { (event) => this.handleEditChange(event) }
         />
-        <Form.Text className="text-muted mb-3">
-          <div>* is a required field</div>
+        <Form.Text className="text-muted">
+          <div className="mb-3">* is a required field</div>
         </Form.Text>
         <Button variant="success" type="submit" className="mb-3">Submit</Button>
         <Button onClick={ ()=>this.deleteItem(this.props.itemCurrentlyBeingEdited?.id) } variant="danger" className="mb-3">Delete Item</Button>

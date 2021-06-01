@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import CreatableSelectInput from './CreatableSelectInput'
+import UploadWidget from './UploadWidget'
 
 let baseURL = 'http://127.0.0.1:8000'
 
@@ -13,6 +14,7 @@ class NewItemForm extends Component {
       brand: "",
       price: "",
       imageUrl: "",
+      imageAlt: "",
       imageInStoreUrl: "",
       category_name: "",
       category_id: "",
@@ -91,6 +93,13 @@ class NewItemForm extends Component {
     })
   }
 
+  handleImageUrlChange = (url, altText) => {
+    this.setState ({
+      imageUrl: url,
+      imageAlt: altText
+    })
+  }
+
   handleCategoryChange = (newCategoryValue) => {
     if (newCategoryValue === undefined) {
       newCategoryValue = ""
@@ -124,15 +133,22 @@ class NewItemForm extends Component {
         <FloatingLabel controlId="price" label="Price" className="mb-3">
           <Form.Control type="text" placeholder="Price" value={this.state.price} onChange= { (event) => this.handleChange(event)} />
         </FloatingLabel>
-        <FloatingLabel controlId="imageUrl" label="Image URL *" className="mb-3">
-          <Form.Control type="text" placeholder="Image URL" value={this.state.imageUrl} onChange= { (event) => this.handleChange(event)} required />
+        <UploadWidget imageUrl={this.state.imageUrl} imageAlt={this.state.imageAlt} handleImageUrlChange={this.handleImageUrlChange} />
+        <FloatingLabel controlId="imageUrl" label="Image URL" className="mb-3">
+          <Form.Control
+          type="text" placeholder="Image URL"
+          value={this.state.imageUrl}
+          onChange= { (event) => this.handleChange(event)}
+          required
+          disabled
+          />
         </FloatingLabel>
         <FloatingLabel controlId="itemInStoreUrl" label="Item URL in store" className="mb-3">
           <Form.Control className="mb-3" type="text" placeholder="Item URL in store" value={this.state.itemInStoreUrl} onChange= { (event) => this.handleChange(event)} />
         </FloatingLabel>
         <CreatableSelectInput categories={this.props.categories} handleCategoryChange={this.handleCategoryChange} category_name={this.state.category_name}/>
-        <Form.Text className="text-muted mb-3">
-          <div>* is a required field</div>
+        <Form.Text className="text-muted">
+          <div className="mb-3">* is a required field</div>
         </Form.Text>
         <Button variant="success" type="submit">Submit</Button>
         <p>{this.state.formSubmitStatus}</p>

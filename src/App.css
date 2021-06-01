@@ -18,12 +18,30 @@
   height: 300px;
 }
 
+.uploaded-image {
+  width: 100px;
+}
+
 #add-new-item-btn {
   display: block;
 
 }
 #items-wish-list-container {
   display: flex;
+}
+
+.uploaded-image-box {
+  position: relative;
+  margin-left: 35%;
+  margin-right: 37%;
+}
+
+.uploaded-image-delete-btn {
+  position: absolute;
+  top: -7px;
+  right: 0px;
+  border-width: 0px;
+  background-color: Transparent;
 }
 
 /* custom styles for form elements */
