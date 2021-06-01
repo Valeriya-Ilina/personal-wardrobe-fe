@@ -25,7 +25,7 @@ class NewItemForm extends Component {
     try {
       const itemBody = {
         "name": this.state.name,
-        "is_purchased": false,
+        "is_purchased": this.props.is_purchased,
         "price": this.state.price,
         "imageUrl": this.state.imageUrl,
         "itemInStoreUrl": this.state.itemInStoreUrl,

@@ -22,7 +22,8 @@ class EditItemForm extends Component {
         "imageUrl": this.props.itemCurrentlyBeingEdited.imageUrl,
         "itemInStoreUrl": this.props.itemCurrentlyBeingEdited.itemInStoreUrl,
         "brand": this.props.itemCurrentlyBeingEdited.brand,
-        "category_id": this.props.itemCurrentlyBeingEdited.category_id.id
+        "category_id": this.props.itemCurrentlyBeingEdited.category_id.id,
+        "is_purchased": this.props.itemCurrentlyBeingEdited.is_purchased
       }
 
       const response = await fetch(url, {
@@ -107,6 +108,17 @@ class EditItemForm extends Component {
     const source = { [event.target.id]: event.target.value }
     const newItemCurrentlyBeingEdited = Object.assign(target, source)
 
+    // handle "Purchased" checkbox changes
+    if(event.target.id === 'is_purchased') {
+      // if "checked" - make true, else - make false
+      if (event.target.checked) {
+        newItemCurrentlyBeingEdited.is_purchased = true
+      }
+      else {
+        newItemCurrentlyBeingEdited.is_purchased = false
+      }
+    }
+
     this.props.editItem(newItemCurrentlyBeingEdited)
   }
 
@@ -156,11 +168,18 @@ class EditItemForm extends Component {
           <Form.Control className="mb-3" type="text" placeholder="Item URL in store" value={this.props.itemCurrentlyBeingEdited?.itemInStoreUrl} onChange= { (event) => this.handleEditChange(event)} />
         </FloatingLabel>
         <CreatableSelectInput categories={this.props.categories} handleCategoryChange={this.handleCategoryChange} category_name={this.props.itemCurrentlyBeingEdited?.category_id.name} />
+        <Form.Check
+          type="checkbox"
+          id="is_purchased"
+          label="Purchased"
+          defaultChecked={this.props.itemCurrentlyBeingEdited?.is_purchased}
+          onChange= { (event) => this.handleEditChange(event) }
+        />
         <Form.Text className="text-muted mb-3">
           <div>* is a required field</div>
         </Form.Text>
-        <Button variant="success" type="submit">Submit</Button>
-        <Button onClick={ ()=>this.deleteItem(this.props.itemCurrentlyBeingEdited?.id) } variant="danger">Delete Item</Button>
+        <Button variant="success" type="submit" className="mb-3">Submit</Button>
+        <Button onClick={ ()=>this.deleteItem(this.props.itemCurrentlyBeingEdited?.id) } variant="danger" className="mb-3">Delete Item</Button>
         <p>{this.state.formSubmitStatus}</p>
       </Form>
     )

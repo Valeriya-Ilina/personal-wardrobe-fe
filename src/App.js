@@ -19,12 +19,40 @@ class App extends Component {
       loggedIn: false,
       items: [],
       categories: [],
-      categoriesWithItems: []
+      categoriesWithItems: [],
+      showOffcanvas: false,
+      itemCurrentlyBeingEdited: null
     }
   }
 
   componentDidMount() {
     this.getCategories()
+  }
+
+  editItem = (item) => {
+    this.handleShow()
+    this.setState({
+      itemCurrentlyBeingEdited: item
+    })
+  }
+
+  // Offcanvas methods (side menu)
+  setShow = (boolean) => {
+    this.setState({
+      showOffcanvas: boolean
+    })
+  }
+
+  handleClose = () => {
+    this.setShow(false)
+    // clear form
+    this.setState({
+      itemCurrentlyBeingEdited: null
+    })
+  }
+
+  handleShow = () => {
+    this.setShow(true)
   }
 
   changeLoggedInStatus = () => {
@@ -139,8 +167,6 @@ class App extends Component {
     }
   }
 
-
-
   render() {
     console.log(this.state)
     return (
@@ -175,14 +201,15 @@ class App extends Component {
               </Route>
               <Route path="/wishlist">
                 { this.state.loggedIn ?
-                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems} categoriesWithItems={this.state.categoriesWithItems} purchased={false} deleteItemFromState={this.deleteItemFromState} />
+                  <ItemsWishList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems} categoriesWithItems={this.state.categoriesWithItems} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} is_purchased={false} editItem={this.editItem} deleteItemFromState={this.deleteItemFromState} showOffcanvas={this.state.showOffcanvas} handleShow={this.handleShow} handleClose={this.handleClose} />
                   :
                   <Redirect to="/login" />
                 }
               </Route>
               <Route path="/wardrobe">
                 { this.state.loggedIn ?
-                  <ItemsWardrobeList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems}  purchased={true}/>
+                  <ItemsWardrobeList items={this.state.items} categories={this.state.categories} createCategory={this.createCategory} getItems={this.getItems} categoriesWithItems={this.state.categoriesWithItems} itemCurrentlyBeingEdited={this.state.itemCurrentlyBeingEdited} is_purchased={true}
+                  editItem={this.editItem} deleteItemFromState={this.deleteItemFromState} showOffcanvas={this.state.showOffcanvas} handleShow={this.handleShow} handleClose={this.handleClose} />
                   :
                   <Redirect to="/login" />
                 }
