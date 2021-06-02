@@ -10,13 +10,17 @@ class Outfits extends Component {
     this.state = {
       outfits: [],
       idOfOutfitToBeEdited: -1,
+      itemsInOutfits: [],
+      selectedOutfitItems: []
     }
   }
 
   componentDidMount() {
     this.getOutfits()
+    this.getItemsInOutfits()
   }
 
+  // get all outfit names and dates for user
   getOutfits = async () => {
     const url = baseURL + '/api/v1/outfits/'
     try {
@@ -39,12 +43,43 @@ class Outfits extends Component {
   }
 
   editOutfit = (outfit) => {
+    this.getSelectedOutfitItems(outfit.id)
+
     // console.log(event.target.attributes.index.value)
     this.setState({
       idOfOutfitToBeEdited: outfit.id
     })
   }
 
+  // get all items in all outfits for user
+  getItemsInOutfits = async (outfit_id) => {
+    const url = baseURL + '/api/v1/outfit-collections/?outfit_id=' + outfit_id
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: "include"
+      })
+      // convert response to json
+      const jsonResponse = await response.json()
+
+      if (response.status === 200) {
+        this.setState({
+          itemsInOutfits: jsonResponse.data
+        })
+      }
+    }
+    catch (err) {
+      console.log('Error => ', err)
+    }
+  }
+
+  getSelectedOutfitItems = (outfit_id) => {
+    const selectedOutfitItems = this.state.itemsInOutfits.filter(element => element.outfit_id.id === outfit_id)
+
+    this.setState({
+      selectedOutfitItems: selectedOutfitItems
+    })
+  }
 
   render() {
     console.log(this.state)

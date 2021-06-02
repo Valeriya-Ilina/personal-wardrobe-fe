@@ -17,7 +17,7 @@ class SelectableImage extends Component {
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return(
       <ToggleButton
         className="mb-2"
@@ -28,7 +28,7 @@ class SelectableImage extends Component {
         // value="1" not sure if it's needed
         onChange={(event) => this.selectImage(event)}
       >
-        <img src={this.props.item.imageUrl} className="item-image-in-outfit" key={`${this.props.categoryIndex}-${this.props.itemIndex}`} />
+        <img src={this.props.item.imageUrl} className="item-image-in-outfit" key={`${this.props.categoryIndex}-${this.props.itemIndex}`} alt={this.props.item.name} />
       </ToggleButton>
     )
   }
