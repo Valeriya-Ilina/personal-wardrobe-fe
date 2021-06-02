@@ -30,6 +30,17 @@
   display: flex;
 }
 
+.outfit-box {
+  width: 600px;
+  height: 600px;
+  border: 1px solid black;
+  margin: auto;
+}
+
+.item-image-in-outfit {
+  width: 100px;
+}
+
 .uploaded-image-box {
   position: relative;
   margin-left: 35%;

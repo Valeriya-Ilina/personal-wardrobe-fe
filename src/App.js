@@ -216,7 +216,7 @@ class App extends Component {
               </Route>
               <Route path="/outfits">
                 { this.state.loggedIn ?
-                  <Outfits />
+                  <Outfits categoriesWithItems={this.state.categoriesWithItems}/>
                   :
                   <Redirect to="/login" />
                 }

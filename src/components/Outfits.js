@@ -7,7 +7,8 @@ class Outfits extends Component {
     super(props)
 
     this.state = {
-      outfits: []
+      outfits: [],
+      idOfOutfitToBeEdited: -1,
     }
   }
 
@@ -36,19 +37,61 @@ class Outfits extends Component {
     }
   }
 
+  editOutfit = (outfit) => {
+    // console.log(event.target.attributes.index.value)
+    this.setState({
+      idOfOutfitToBeEdited: outfit.id
+    })
+  }
+
+
   render() {
     console.log(this.state)
     return(
       <div>
         <h1>Outfits</h1>
         <div className="outfits-container">
+          <h3>Outfit list</h3>
           {
-            this.state.outfits.map(outfit => {
+            this.state.outfits.map((outfit, idx) => {
               return (
-                <p>{outfit.name}</p>
+                <button key={idx} onClick={() => this.editOutfit(outfit)}>{outfit.name}</button>
               )
             })
           }
+          {
+            // if === -1, do not show components, otherwise, show the selected outfit
+            this.state.idOfOutfitToBeEdited != -1 ?
+
+            <>
+              <div className="categories-with-items-container">
+                <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
+                {
+                  // map through the list of categories
+                  this.props.categoriesWithItems.map((categoryWithItems, idx) => {
+                    return (
+                      <div key={idx}>
+                        <p>{categoryWithItems.category_name}</p>
+                        {
+                          // map through the list of items in each category
+                          categoryWithItems.items.map((item, idx) => <img src={item.imageUrl} className="item-image-in-outfit" key={idx}/> )
+                        }
+
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className="outfit-box">
+                <p>box</p>
+              </div>
+            </>
+
+            :
+
+            ""
+          }
+
         </div>
       </div>
     )
