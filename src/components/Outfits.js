@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import SelectableImage from './SelectableImage'
 
 let baseURL = 'http://127.0.0.1:8000'
 
@@ -68,13 +69,17 @@ class Outfits extends Component {
                 <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
                 {
                   // map through the list of categories
-                  this.props.categoriesWithItems.map((categoryWithItems, idx) => {
+                  this.props.categoriesWithItems.map((categoryWithItems, categoryIndex) => {
                     return (
-                      <div key={idx}>
+                      <div key={categoryIndex}>
                         <p>{categoryWithItems.category_name}</p>
                         {
                           // map through the list of items in each category
-                          categoryWithItems.items.map((item, idx) => <img src={item.imageUrl} className="item-image-in-outfit" key={idx}/> )
+                          categoryWithItems.items.map((item, itemIndex) => {
+                            return (
+                              <SelectableImage item={item} categoryIndex={categoryIndex} itemIndex={itemIndex}/>
+                            )
+                          })
                         }
 
                       </div>
