@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import SelectableImage from './SelectableImage'
+import SelectableCategory from './SelectableCategory'
 
 const baseURL = process.env.REACT_APP_BASEURL
 
@@ -10,8 +10,9 @@ class Outfits extends Component {
     this.state = {
       outfits: [],
       idOfOutfitToBeEdited: -1,
-      itemsInOutfits: [],
-      selectedOutfitItems: []
+      allItemsInAllOutfits: [],
+      selectedOutfitItems: [],
+      categoriesWithItems: this.props.categoriesWithItems // temporarily
     }
   }
 
@@ -44,10 +45,31 @@ class Outfits extends Component {
 
   editOutfit = (outfit) => {
     this.getSelectedOutfitItems(outfit.id)
+    console.log(outfit.id)
 
     // console.log(event.target.attributes.index.value)
     this.setState({
       idOfOutfitToBeEdited: outfit.id
+    })
+  }
+
+  addSelectedOutfitItem = (itemWithCoordinates) => {
+    const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
+    // add
+    copySelectedOutfitItems.push(itemWithCoordinates)
+    this.setState({
+      selectedOutfitItems: copySelectedOutfitItems
+    })
+  }
+
+  removeSelectedOutfitItem = (itemWithCoordinates) => {
+    // remove
+    const findIndex = this.state.selectedOutfitItems.findIndex(item => item.id === itemWithCoordinates.id)
+    console.log(findIndex)
+    const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
+    copySelectedOutfitItems.splice(findIndex, 1)
+    this.setState({
+      selectedOutfitItems: copySelectedOutfitItems
     })
   }
 
@@ -64,7 +86,7 @@ class Outfits extends Component {
 
       if (response.status === 200) {
         this.setState({
-          itemsInOutfits: jsonResponse.data
+          allItemsInAllOutfits: jsonResponse.data
         })
       }
     }
@@ -74,7 +96,7 @@ class Outfits extends Component {
   }
 
   getSelectedOutfitItems = (outfit_id) => {
-    const selectedOutfitItems = this.state.itemsInOutfits.filter(element => element.outfit_id.id === outfit_id)
+    const selectedOutfitItems = this.state.allItemsInAllOutfits.filter(element => element.outfit_id.id === outfit_id)
 
     this.setState({
       selectedOutfitItems: selectedOutfitItems
@@ -83,6 +105,7 @@ class Outfits extends Component {
 
   render() {
     console.log(this.state)
+    console.log("RERENDERING Outfits")
     return(
       <div>
         <h1>Outfits</h1>
@@ -102,25 +125,7 @@ class Outfits extends Component {
             <>
               <div className="categories-with-items-container">
                 <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
-                {
-                  // map through the list of categories
-                  this.props.categoriesWithItems.map((categoryWithItems, categoryIndex) => {
-                    return (
-                      <div key={categoryIndex}>
-                        <p>{categoryWithItems.category_name}</p>
-                        {
-                          // map through the list of items in each category
-                          categoryWithItems.items.map((item, itemIndex) => {
-                            return (
-                              <SelectableImage item={item} categoryIndex={categoryIndex} itemIndex={itemIndex}/>
-                            )
-                          })
-                        }
-
-                      </div>
-                    )
-                  })
-                }
+                <SelectableCategory categoriesWithItems={this.props.categoriesWithItems} idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} addSelectedOutfitItem={this.addSelectedOutfitItem} removeSelectedOutfitItem={this.removeSelectedOutfitItem} />
               </div>
               <div className="outfit-box">
                 <p>box</p>
