@@ -14,16 +14,20 @@ class SelectableImage extends Component {
     }
   }
 
-  componentDidMount() {
-    // update checked status if it's already selected
-    this.props.selectedOutfitItems.forEach(outfitItem => {
-      if (this.props.item.id === outfitItem.id) {
-        this.setState({
-          checked: true
-        })
-      }
-    })
+  componentWillMount() {
+    this.setState({
+      checked: !!this.props.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.id)
+    });
   }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.idOfOutfitToBeEdited !== this.props.idOfOutfitToBeEdited) {
+      this.setState({
+        checked: !!nextProps.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.id)
+      });
+    }
+  }
+  
 
   selectImage = (event) => {
 
