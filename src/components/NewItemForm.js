@@ -3,7 +3,7 @@ import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import CreatableSelectInput from './CreatableSelectInput'
 import UploadWidget from './UploadWidget'
 
-let baseURL = 'http://127.0.0.1:8000'
+const baseURL = process.env.REACT_APP_BASEURL
 
 class NewItemForm extends Component {
   constructor(props) {

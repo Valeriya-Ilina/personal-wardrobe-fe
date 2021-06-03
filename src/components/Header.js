@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
-let baseURL = 'http://127.0.0.1:8000'
+const baseURL = process.env.REACT_APP_BASEURL
 
 class Header extends Component {
 

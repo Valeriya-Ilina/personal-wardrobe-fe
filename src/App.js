@@ -9,7 +9,7 @@ import LoginRegister from './components/LoginRegister'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
-let baseURL = 'http://127.0.0.1:8000'
+const baseURL = process.env.REACT_APP_BASEURL
 
 class App extends Component {
   constructor(props) {

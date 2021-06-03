@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-let baseURL = 'http://127.0.0.1:8000'
+const baseURL = process.env.REACT_APP_BASEURL
 
 class RegisterForm extends Component {
   constructor(props) {

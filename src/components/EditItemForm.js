@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import CreatableSelectInput from './CreatableSelectInput'
 
-let baseURL = 'http://127.0.0.1:8000'
+const baseURL = process.env.REACT_APP_BASEURL
 
 class EditItemForm extends Component {
   constructor(props) {

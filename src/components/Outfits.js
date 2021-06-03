@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import SelectableImage from './SelectableImage'
 
-let baseURL = 'http://127.0.0.1:8000'
+const baseURL = process.env.REACT_APP_BASEURL
 
 class Outfits extends Component {
   constructor(props) {
