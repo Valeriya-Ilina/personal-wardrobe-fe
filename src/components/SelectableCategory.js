@@ -11,8 +11,6 @@ class SelectableCategory extends Component {
   }
 
   render() {
-    console.log(this.props.idOfOutfitToBeEdited)
-    console.log("RERENDERING SelectableCategory")
     return(
       <>
         {

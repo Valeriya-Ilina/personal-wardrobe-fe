@@ -53,29 +53,92 @@ class Outfits extends Component {
     })
   }
 
-  addSelectedOutfitItem = (itemWithCoordinates) => {
+  addSelectedOutfitItemInDatabase = async (itemWithCoordinates) => {
+    const url = baseURL + '/api/v1/outfit-collections/'
+    console.log(itemWithCoordinates)
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify(itemWithCoordinates)
+      })
+
+      const responseBody = await response.json()
+      console.log(responseBody)
+      if (response.status === 201) {
+        console.log("ITEM WITH COORDINATES IS CREATED")
+        return responseBody.data
+      }
+    }
+    catch (err) {
+      console.log('Error => ', err)
+    }
+  }
+
+  removeSelectedOutfitItemInDatabase = async (itemOutfitId) => {
+    const url = baseURL + '/api/v1/outfit-collections/' + itemOutfitId
+
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        credentials: 'include'
+      })
+      if (response.status === 200) {
+        console.log("DELETED ITEM WITH COORDINATES WITH ID " + itemOutfitId)
+        return itemOutfitId
+      }
+    }
+    catch(err){
+      console.log('Error =>', err)
+    }
+  }
+
+
+  addSelectedOutfitItem = async (itemWithCoordinates) => {
+    const copyAllItemsInAllOutfits = [...this.state.allItemsInAllOutfits]
     const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
-    // add
-    copySelectedOutfitItems.push(itemWithCoordinates)
+
+    // fetch call to api backend to POST
+    const newItemWithCoordinates = await this.addSelectedOutfitItemInDatabase(itemWithCoordinates)
+    console.log(itemWithCoordinates)
+
+    copyAllItemsInAllOutfits.push(newItemWithCoordinates)
+    copySelectedOutfitItems.push(newItemWithCoordinates)
+
     this.setState({
+      allItemsInAllOutfits: copyAllItemsInAllOutfits,
       selectedOutfitItems: copySelectedOutfitItems
     })
   }
 
-  removeSelectedOutfitItem = (itemWithCoordinates) => {
+  removeSelectedOutfitItem = async (itemOutfitId) => {
+    const copyAllItemsInAllOutfits = [...this.state.allItemsInAllOutfits]
+    const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
+
+    // fetch call to api backend to DELETE
+    await this.removeSelectedOutfitItemInDatabase(itemOutfitId)
+
     // remove
-    const findIndex = this.state.selectedOutfitItems.findIndex(item => item.id === itemWithCoordinates.id)
-    console.log(findIndex)
-    const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
-    copySelectedOutfitItems.splice(findIndex, 1)
+    const findIndexInAll = this.state.allItemsInAllOutfits.findIndex(item => item.id === itemOutfitId)
+    console.log(findIndexInAll)
+    const findIndexInSelected = this.state.selectedOutfitItems.findIndex(item => item.id === itemOutfitId)
+
+    copyAllItemsInAllOutfits.splice(findIndexInAll, 1)
+    copySelectedOutfitItems.splice(findIndexInSelected, 1)
+
     this.setState({
+      allItemsInAllOutfits: copyAllItemsInAllOutfits,
       selectedOutfitItems: copySelectedOutfitItems
     })
   }
 
-  // get all items in all outfits for user
-  getItemsInOutfits = async (outfit_id) => {
-    const url = baseURL + '/api/v1/outfit-collections/?outfit_id=' + outfit_id
+  // get all items in all outfits for user from backend
+  getItemsInOutfits = async () => {
+    const url = baseURL + '/api/v1/outfit-collections/'
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -95,6 +158,7 @@ class Outfits extends Component {
     }
   }
 
+  // filter selected items based on selected outfit
   getSelectedOutfitItems = (outfit_id) => {
     const selectedOutfitItems = this.state.allItemsInAllOutfits.filter(element => element.outfit_id.id === outfit_id)
 
@@ -105,7 +169,6 @@ class Outfits extends Component {
 
   render() {
     console.log(this.state)
-    console.log("RERENDERING Outfits")
     return(
       <div>
         <h1>Outfits</h1>

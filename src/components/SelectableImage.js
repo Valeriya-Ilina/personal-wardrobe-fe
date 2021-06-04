@@ -16,37 +16,38 @@ class SelectableImage extends Component {
 
   componentWillMount() {
     this.setState({
-      checked: !!this.props.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.id)
+      checked: !!this.props.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.item_id.id)
     });
   }
 
   componentWillUpdate(nextProps) {
     if (nextProps.idOfOutfitToBeEdited !== this.props.idOfOutfitToBeEdited) {
       this.setState({
-        checked: !!nextProps.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.id)
+        checked: !!nextProps.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.item_id.id)
       });
     }
   }
-  
+
 
   selectImage = (event) => {
-
-    const selectedOutfitItem = {
-      itemId: this.props.item.id,
-      outfit_id: this.props.idOfOutfitToBeEdited,
-      coordinateX: this.state.coordinateX,
-      coordinateY: this.state.coordinateY,
-      image_width: this.state.image_width,
-      image_height: this.state.image_height
-    }
-
     // if user selects the item
     if (this.state.checked === false) {
+      const selectedOutfitItem = {
+        item_id: this.props.item.id,
+        outfit_id: this.props.idOfOutfitToBeEdited,
+        coordinateX: this.state.coordinateX,
+        coordinateY: this.state.coordinateY,
+        image_width: this.state.image_width,
+        image_height: this.state.image_height
+      }
+
       this.props.addSelectedOutfitItem(selectedOutfitItem)
     }
     // if user unselects the item
     else {
-      this.props.removeSelectedOutfitItem(selectedOutfitItem)
+      const foundItemOutfit = this.props.selectedOutfitItems.find(itemOutfit => this.props.item.id = itemOutfit.id )
+      const itemOutfitId = foundItemOutfit.id
+      this.props.removeSelectedOutfitItem(itemOutfitId)
     }
 
     this.setState({
@@ -56,7 +57,6 @@ class SelectableImage extends Component {
 
   render() {
     // console.log(this.props.idOfOutfitToBeEdited)
-    console.log("RERENDERING SelectableImage")
     return(
       <>
         <ToggleButton
