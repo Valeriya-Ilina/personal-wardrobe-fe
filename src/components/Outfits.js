@@ -65,6 +65,31 @@ class Outfits extends Component {
     })
   }
 
+  deleteOutfit = async () => {
+    const id = this.state.idOfOutfitToBeEdited
+    console.log(id)
+    const url = baseURL + '/api/v1/outfits/' + id
+    try {
+      const response = await fetch( url, {
+        method: 'DELETE',
+        credentials: "include"
+      })
+      if (response.status === 200){
+        const findIndex = this.state.outfits.findIndex(outfit => outfit.id === id)
+        let copyOutfits = [...this.state.outfits]
+        copyOutfits.splice(findIndex, 1)
+
+        this.setState({
+          outfits: copyOutfits,
+          idOfOutfitToBeEdited: -1
+        })
+      }
+    }
+    catch(err){
+      console.log('Error =>', err)
+    }
+  }
+
   addSelectedOutfitItemInDatabase = async (itemWithCoordinates) => {
     const url = baseURL + '/api/v1/outfit-collections/'
     console.log(itemWithCoordinates)

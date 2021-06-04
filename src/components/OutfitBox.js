@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { Button } from 'react-bootstrap'
 import ImageInBox from './ImageInBox'
 
 class OutfitBox extends Component {
@@ -20,6 +21,9 @@ class OutfitBox extends Component {
             )
           })
         }
+      <>
+        {this.props.selectedOutfitItems.length ? "" : <Button onClick={() => this.props.deleteOutfit()}>Detete Outfite</Button>}
+        <div className="outfit-box">
 
       </div>
     )
