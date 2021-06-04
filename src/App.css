@@ -55,6 +55,14 @@
   background-color: Transparent;
 }
 
+.image-in-box {
+  min-width: 100%;
+  min-height: 100%;
+  pointer-events: none;
+}
+
+
+
 /* custom styles for form elements */
 .creatable-select > div {
   padding-top: 12px;
