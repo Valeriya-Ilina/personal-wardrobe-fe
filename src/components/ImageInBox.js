@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import { Rnd } from 'react-rnd'
 
+const baseURL = process.env.REACT_APP_BASEURL
+
 const style = {
   display: "flex",
   alignItems: "center",
@@ -15,14 +17,48 @@ class ImageInBox extends Component {
     super(props)
 
     this.state = {
-      width: 100,
-      height: 100,
       x: 10,
-      y: 10
+      y: 10,
+      width: '200',
+      height: '200',
+    }
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate called")
+    this.updateItemSizePosition(this.props.outfitItem.id)
+  }
+
+  updateItemSizePosition = async (id) => {
+    console.log(id)
+    const url = baseURL + '/api/v1/outfit-collections/' + id
+
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify({
+          "coordinateX": this.state.x,
+          "coordinateY": this.state.y,
+          "image_width": this.state.width.slice(0, -2), // removes last 2 chars
+          "image_height": this.state.height.slice(0, -2), // e.g. '100px' => '100'
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+
+      if (response.status === 200) {
+        console.log('image position and size updated')
+      }
+    }
+    catch(err){
+      console.log('Error => ', err);
     }
   }
 
   render() {
+    console.log(this.state)
     return (
       <Rnd
         style={style}
