@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import SelectableCategory from './SelectableCategory'
+import OutfitBox from './OutfitBox'
 
 const baseURL = process.env.REACT_APP_BASEURL
 
@@ -190,9 +191,7 @@ class Outfits extends Component {
                 <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
                 <SelectableCategory categoriesWithItems={this.props.categoriesWithItems} idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} addSelectedOutfitItem={this.addSelectedOutfitItem} removeSelectedOutfitItem={this.removeSelectedOutfitItem} />
               </div>
-              <div className="outfit-box">
-                <p>box</p>
-              </div>
+              <OutfitBox selectedOutfitItems={this.state.selectedOutfitItems}/>
             </>
 
             :
