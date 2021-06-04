@@ -1,6 +1,8 @@
 import { Component } from 'react'
+import { Button } from 'react-bootstrap'
 import SelectableCategory from './SelectableCategory'
 import OutfitBox from './OutfitBox'
+import OutfitNewForm from './OutfitNewForm'
 
 const baseURL = process.env.REACT_APP_BASEURL
 
@@ -13,7 +15,7 @@ class Outfits extends Component {
       idOfOutfitToBeEdited: -1,
       allItemsInAllOutfits: [],
       selectedOutfitItems: [],
-      categoriesWithItems: this.props.categoriesWithItems // temporarily
+      isOutfitNewFormOpen: false
     }
   }
 
@@ -42,6 +44,15 @@ class Outfits extends Component {
     catch (err) {
       console.log('Error => ', err)
     }
+  }
+
+  addOutfit = async (newOutfit) => {
+    const copyOutfits = [...this.state.outfits]
+    copyOutfits.push(newOutfit)
+    this.setState({
+      outfits: copyOutfits,
+      isOutfitNewFormOpen: false
+    })
   }
 
   editOutfit = (outfit) => {
@@ -168,6 +179,21 @@ class Outfits extends Component {
     })
   }
 
+
+
+  showOutfitNewForm = () => {
+    this.setState({
+      isOutfitNewFormOpen: !this.state.isOutfitNewFormOpen
+    })
+  }
+
+  hideOutfitNewForm = () => {
+    this.setState({
+      isOutfitNewFormOpen: !this.state.isOutfitNewFormOpen
+    })
+  }
+
+
   render() {
     console.log(this.state)
     return(
@@ -182,6 +208,12 @@ class Outfits extends Component {
               )
             })
           }
+          <div>
+            <Button onClick={this.showOutfitNewForm}>add new outfit</Button>
+            {
+              this.state.isOutfitNewFormOpen ? <OutfitNewForm addOutfit={this.addOutfit}/> : ""
+            }
+          </div>
           {
             // if === -1, do not show components, otherwise, show the selected outfit
             this.state.idOfOutfitToBeEdited != -1 ?
