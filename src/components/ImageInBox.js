@@ -17,21 +17,49 @@ class ImageInBox extends Component {
     super(props)
 
     this.state = {
-      x: 10,
-      y: 10,
-      width: '200',
-      height: '200',
+      x: '',
+      y: '',
+      width: '',
+      height: '',
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      x: this.props.outfitItem.coordinateX,
+      y: this.props.outfitItem.coordinateY,
+      width: this.props.outfitItem.image_width,
+      height: this.props.outfitItem.image_height,
+    })
+  }
+
+  componentWillUpdate(nextProps) {
+    console.log(this.props.outfitItem)
+    // this.updateItemSizePosition(this.props.outfitItem.id)
+    if (nextProps.idOfOutfitToBeEdited !== this.props.idOfOutfitToBeEdited) {
+      this.setState({
+        x: this.props.outfitItem.coordinateX,
+        y: this.props.outfitItem.coordinateY,
+        width: this.props.outfitItem.image_width,
+        height: this.props.outfitItem.image_height
+      });
     }
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate called")
     this.updateItemSizePosition(this.props.outfitItem.id)
   }
 
   updateItemSizePosition = async (id) => {
-    console.log(id)
     const url = baseURL + '/api/v1/outfit-collections/' + id
+
+    // sanitize data to remove last 2 chars ('px') if needed, e.g. '100px' => '100'
+    let image_width = this.state.width
+    console.log(image_width)
+    image_width = image_width.toString().indexOf('px') !== -1 ? this.state.width.slice(0, -2) : this.state.width
+    console.log(image_width)
+    let image_height = this.state.height
+    image_height = image_height.toString().indexOf('px') !== -1 ? this.state.height.slice(0, -2) : this.state.height
 
     try {
       const response = await fetch(url, {
@@ -39,8 +67,8 @@ class ImageInBox extends Component {
         body: JSON.stringify({
           "coordinateX": this.state.x,
           "coordinateY": this.state.y,
-          "image_width": this.state.width.slice(0, -2), // removes last 2 chars
-          "image_height": this.state.height.slice(0, -2), // e.g. '100px' => '100'
+          "image_width": image_width,
+          "image_height": image_height
         }),
         headers: {
           'Content-Type': 'application/json'

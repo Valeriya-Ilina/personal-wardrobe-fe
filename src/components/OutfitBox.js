@@ -16,7 +16,7 @@ class OutfitBox extends Component {
         {
           this.props.selectedOutfitItems.map(outfitItem => {
             return (
-                <ImageInBox outfitItem={outfitItem} />
+                <ImageInBox idOfOutfitToBeEdited={this.props.idOfOutfitToBeEdited} outfitItem={outfitItem} />
             )
           })
         }

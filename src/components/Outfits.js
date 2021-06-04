@@ -187,11 +187,11 @@ class Outfits extends Component {
             this.state.idOfOutfitToBeEdited != -1 ?
 
             <>
+              <OutfitBox idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems}/>
               <div className="categories-with-items-container">
                 <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
                 <SelectableCategory categoriesWithItems={this.props.categoriesWithItems} idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} addSelectedOutfitItem={this.addSelectedOutfitItem} removeSelectedOutfitItem={this.removeSelectedOutfitItem} />
               </div>
-              <OutfitBox selectedOutfitItems={this.state.selectedOutfitItems}/>
             </>
 
             :
