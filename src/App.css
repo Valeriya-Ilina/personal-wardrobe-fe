@@ -2,11 +2,64 @@
   text-align: center;
 }
 
-.footer {
-  position: absolute;
-  /* bottom: 0; */
+/* .row {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+} */
+
+/* .container img {
   width: 100%;
+  height: auto;
+} */
+
+/* home page */
+.home-image {
+  position: relative;
+  width: 50%;
+  margin: auto;
 }
+
+.home-image .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.home-image .btn:hover {
+  background-color: black;
+}
+
+.backgroundImg7 {
+  width: 400px;
+  height: 250px;
+}
+
+.backgroundImg2 {
+  width: 370px;
+  height: 450px;
+}
+
+.backgroundImg3 {
+  width: 400px;
+  height: 250px;
+}
+
+.backgroundImg4 {
+  width: 370px;
+  height: 450px;
+}
+
+
 
 .category-items {
   display: flex;
@@ -18,10 +71,6 @@
   height: 300px;
 }
 
-.uploaded-image {
-  width: 100px;
-}
-
 #add-new-item-btn {
   display: block;
 
@@ -30,14 +79,9 @@
   display: flex;
 }
 
-.outfit-box {
-  width: 600px;
-  height: 600px;
-  border: 1px solid black;
-  margin: auto;
-}
 
-.item-image-in-outfit {
+/* sidebar */
+.uploaded-image {
   width: 100px;
 }
 
@@ -55,12 +99,24 @@
   background-color: Transparent;
 }
 
+
+/* outfit page */
+.outfit-box {
+  width: 600px;
+  height: 600px;
+  border: 1px solid black;
+  margin: auto;
+}
+
+.item-image-in-outfit {
+  width: 100px;
+}
+
 .image-in-box {
   min-width: 100%;
   min-height: 100%;
   pointer-events: none;
 }
-
 
 
 /* custom styles for form elements */
@@ -71,4 +127,12 @@
 
 .creatable-select > div > div > div {
   color: black;
+}
+
+
+/* footer */
+.footer {
+  position: absolute;
+  /* bottom: 0; */
+  width: 100%;
 }
