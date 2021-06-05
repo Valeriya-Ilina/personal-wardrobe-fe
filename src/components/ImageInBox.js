@@ -41,10 +41,10 @@ class ImageInBox extends Component {
 
         onResizeStop={(e, direction, ref, delta, position) => {
           // sanitize data to remove last 2 chars ('px') if needed, e.g. '100px' => '100'
-          let image_width = this.props.outfitItem.image_width
-          image_width = image_width.toString().indexOf('px') !== -1 ? this.props.outfitItem.image_width.slice(0, -2) : this.props.outfitItem.image_width
-          let image_height = this.props.outfitItem.image_height
-          image_height = image_height.toString().indexOf('px') !== -1 ? this.props.outfitItem.image_height.slice(0, -2) : this.props.outfitItem.image_height
+          let image_width = ref.style.width
+          image_width = image_width.toString().indexOf('px') !== -1 ? image_width.slice(0, -2) : image_width
+          let image_height = ref.style.height
+          image_height = image_height.toString().indexOf('px') !== -1 ? image_height.slice(0, -2) : image_height
 
           const itemSizePosition = {
             "coordinateX": this.props.outfitItem.coordinateX,
