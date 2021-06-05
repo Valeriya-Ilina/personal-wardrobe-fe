@@ -37,6 +37,7 @@
 
 .home-image .btn:hover {
   background-color: black;
+  color: lightgrey;
 }
 
 .backgroundImg7 {
@@ -79,6 +80,16 @@
   display: flex;
 }
 
+
+
+/* header */
+.navbar {
+  background-color: white !important;
+}
+
+#username-text {
+  color: white
+}
 
 /* sidebar */
 .uploaded-image {

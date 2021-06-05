@@ -32,9 +32,10 @@ class LoginForm extends Component {
         credentials: "include"
       })
 
+      const json = await response.json()
       if (response.status === 200) {
         console.log("USER IS AUTHENTICATED")
-        this.props.changeLoggedInStatus()
+        this.props.changeLoggedInStatus(json.data.username)
       } else {
         this.setState({
           authenticationResult: "Something went wrong",

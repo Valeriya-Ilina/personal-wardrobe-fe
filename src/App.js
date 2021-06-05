@@ -17,6 +17,7 @@ class App extends Component {
 
     this.state = {
       loggedIn: false,
+      username: '',
       items: [],
       categories: [],
       categoriesWithItems: [],
@@ -55,9 +56,10 @@ class App extends Component {
     this.setShow(true)
   }
 
-  changeLoggedInStatus = () => {
+  changeLoggedInStatus = (username) => {
     this.setState({
-      loggedIn: !this.state.loggedIn
+      loggedIn: !this.state.loggedIn,
+      username: username
     })
   }
 
@@ -172,7 +174,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Header loggedIn={this.state.loggedIn} changeLoggedInStatus={this.changeLoggedInStatus} />
+          <Header loggedIn={this.state.loggedIn} username={this.state.username} changeLoggedInStatus={this.changeLoggedInStatus} />
           <main>
             <Switch>
               <Route exact path="/">

@@ -25,7 +25,7 @@ class Header extends Component {
 
   render() {
     return(
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="navbar" >
           <Container>
             <Navbar.Brand as={Link} to="/home">Personal Wardrobe</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -35,27 +35,34 @@ class Header extends Component {
                 <Nav.Link as={Link} to="/wardrobe">Your Wardrobe</Nav.Link>
                 <Nav.Link as={Link} to="/outfits">Outfits</Nav.Link>
               </Nav>
+              <Nav>
+              {
+                this.props.loggedIn ?
+                <>
+                  <Navbar.Text id='username-text'>
+                    {this.props.username}
+                  </Navbar.Text>
+                  <Nav>
+                    <Nav.Link as={Link} onClick={this.logoutUser}>Logout</Nav.Link>
+                  </Nav>
+
+                </>
+                :
+                <Navbar.Collapse className="justify-content-end">
+                  <NavDropdown title="Sign In" id="collasible-nav-dropdown" menuVariant='dark'>
+                  <NavDropdown.Item href="/login">Sign In</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/register">Don't have an account? Register</NavDropdown.Item>
+
+                  </NavDropdown>
+                </Navbar.Collapse>
+              }
+              </Nav>
+
             </Navbar.Collapse>
 
-            {
-              this.props.loggedIn ?
-              <>
-                Username
-                <Link onClick={this.logoutUser}>Logout</Link>
-              </>
-              :
-              <Navbar.Collapse className="justify-content-end">
-                <NavDropdown title="Sign In" id="collasible-nav-dropdown" menuVariant='dark'>
-                  <div className="d-grid gap-2">
-                    <Button href="/login" variant="secondary">Sign In</Button>
-                  </div>
-                  <NavDropdown.Divider />
-                  <p>Don't have an account?
-                    <a href="/register">Register</a>
-                  </p>
-                </NavDropdown>
-              </Navbar.Collapse>
-            }
+
+
           </Container>
         </Navbar>
     )
