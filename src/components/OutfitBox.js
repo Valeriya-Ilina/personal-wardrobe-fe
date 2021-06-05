@@ -13,19 +13,20 @@ class OutfitBox extends Component {
 
   render() {
     return (
-      <div className="outfit-box">
-        {
-          this.props.selectedOutfitItems.map(outfitItem => {
-            return (
-                <ImageInBox idOfOutfitToBeEdited={this.props.idOfOutfitToBeEdited} outfitItem={outfitItem} />
-            )
-          })
-        }
       <>
         {this.props.selectedOutfitItems.length ? "" : <Button onClick={() => this.props.deleteOutfit()}>Detete Outfite</Button>}
         <div className="outfit-box">
 
-      </div>
+          {
+            this.props.selectedOutfitItems.length > 0 && this.props.selectedOutfitItems.map(outfitItem => {
+              return (
+                  <ImageInBox idOfOutfitToBeEdited={this.props.idOfOutfitToBeEdited} outfitItem={outfitItem} editSelectedOutfitItem={this.props.editSelectedOutfitItem} />
+              )
+            })
+          }
+
+        </div>
+      </>
     )
   }
 }

@@ -6,7 +6,6 @@ class SelectableImage extends Component {
     super(props)
 
     this.state = {
-      checked: false,
       coordinateX: 10,
       coordinateY: 10,
       image_width: 200,
@@ -14,24 +13,8 @@ class SelectableImage extends Component {
     }
   }
 
-  componentWillMount() {
-    this.setState({
-      checked: !!this.props.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.item_id.id)
-    });
-  }
-
-  componentWillUpdate(nextProps) {
-    if (nextProps.idOfOutfitToBeEdited !== this.props.idOfOutfitToBeEdited) {
-      this.setState({
-        checked: !!nextProps.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.item_id.id)
-      });
-    }
-  }
-
-
-  selectImage = (event) => {
-    // if user selects the item
-    if (this.state.checked === false) {
+  selectImage = () => {
+    if (this.props.checked === false) {
       const selectedOutfitItem = {
         item_id: this.props.item.id,
         outfit_id: this.props.idOfOutfitToBeEdited,
@@ -45,14 +28,12 @@ class SelectableImage extends Component {
     }
     // if user unselects the item
     else {
-      const foundItemOutfit = this.props.selectedOutfitItems.find(itemOutfit => this.props.item.id = itemOutfit.id )
-      const itemOutfitId = foundItemOutfit.id
-      this.props.removeSelectedOutfitItem(itemOutfitId)
+      console.log('deleting ', this.props.item)
+      console.log('from ', this.props.selectedOutfitItems)
+      const foundItemOutfit = this.props.selectedOutfitItems.find(outfitItem => this.props.item.id === outfitItem.item_id.id)
+      console.log('we found ', foundItemOutfit, 'to remove')
+      this.props.removeSelectedOutfitItem(foundItemOutfit)
     }
-
-    this.setState({
-      checked: event.target.checked
-    })
   }
 
   render() {
@@ -64,11 +45,11 @@ class SelectableImage extends Component {
           id={`toggleCheck-${this.props.categoryIndex}-${this.props.itemIndex}`}
           type="checkbox"
           variant="outline-primary"
-          checked={this.state.checked}
+          checked={this.props.checked}
           // value="1" not sure if it's needed
-          onChange={(event) => this.selectImage(event)}
+          
         >
-          <img src={this.props.item.imageUrl} className="item-image-in-outfit" key={`${this.props.categoryIndex}-${this.props.itemIndex}`} alt={this.props.item.name} />
+          <img onClick={this.selectImage} src={this.props.item.imageUrl} className="item-image-in-outfit" key={`${this.props.categoryIndex}-${this.props.itemIndex}`} alt={this.props.item.name} />
         </ToggleButton>
       </>
     )

@@ -105,16 +105,9 @@ class App extends Component {
 
   deleteItemFromState = (id) => {
     let copyArray = [...this.state.categoriesWithItems]
-    for (const category of copyArray) {
-      const findIndex = category.items.findIndex(item => item.id === id)
-      if (findIndex != -1) {
-        category.items.splice(findIndex, 1)
-        break
-      }
-    }
 
     this.setState({
-      categoriesWithItems: copyArray
+      categoriesWithItems: copyArray.filter(item => item.id !== id)
     })
   }
 
@@ -218,7 +211,7 @@ class App extends Component {
               </Route>
               <Route path="/outfits">
                 { this.state.loggedIn ?
-                  <Outfits categoriesWithItems={this.state.categoriesWithItems}/>
+                  <Outfits categoriesWithItems={this.state.categoriesWithItems} getItems={this.getItems} />
                   :
                   <Redirect to="/login" />
                 }

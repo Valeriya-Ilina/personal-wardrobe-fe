@@ -21,12 +21,13 @@ class LoginRegister extends Component {
   render() {
     return(
       <>
-        <div>
+        <div >
           <Tabs
-            id="controlled-tab-example"
+            id="login-register-tabs"
             activeKey={this.state.key}
             onSelect={(k) => this.setKey(k)}
             className="mb-3"
+            justify
           >
             <Tab eventKey="login" title="Login">
               <LoginForm changeLoggedInStatus={this.props.changeLoggedInStatus}/>

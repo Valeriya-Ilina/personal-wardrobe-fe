@@ -59,7 +59,6 @@ class Outfits extends Component {
     this.getSelectedOutfitItems(outfit.id)
     console.log(outfit.id)
 
-    // console.log(event.target.attributes.index.value)
     this.setState({
       idOfOutfitToBeEdited: outfit.id
     })
@@ -92,7 +91,7 @@ class Outfits extends Component {
 
   addSelectedOutfitItemInDatabase = async (itemWithCoordinates) => {
     const url = baseURL + '/api/v1/outfit-collections/'
-    console.log(itemWithCoordinates)
+    console.log('in addSelectedOutfitItemInDatabase saving ', itemWithCoordinates)
 
     try {
       const response = await fetch(url, {
@@ -107,7 +106,7 @@ class Outfits extends Component {
       const responseBody = await response.json()
       console.log(responseBody)
       if (response.status === 201) {
-        console.log("ITEM WITH COORDINATES IS CREATED")
+        console.log("ITEM WITH COORDINATES IS CREATED WITH ID ", responseBody.data.id)
         return responseBody.data
       }
     }
@@ -134,43 +133,96 @@ class Outfits extends Component {
     }
   }
 
+  editSelectedOutfitItemInDatabase = async (id, itemSizePosition) => {
+    const url = baseURL + '/api/v1/outfit-collections/' + id
 
-  addSelectedOutfitItem = async (itemWithCoordinates) => {
-    const copyAllItemsInAllOutfits = [...this.state.allItemsInAllOutfits]
-    const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(itemSizePosition),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
 
-    // fetch call to api backend to POST
-    const newItemWithCoordinates = await this.addSelectedOutfitItemInDatabase(itemWithCoordinates)
-    console.log(itemWithCoordinates)
-
-    copyAllItemsInAllOutfits.push(newItemWithCoordinates)
-    copySelectedOutfitItems.push(newItemWithCoordinates)
-
-    this.setState({
-      allItemsInAllOutfits: copyAllItemsInAllOutfits,
-      selectedOutfitItems: copySelectedOutfitItems
-    })
+      if (response.status === 200) {
+        console.log('image position and size updated')
+      }
+    }
+    catch(err){
+      console.log('Error => ', err);
+    }
   }
 
-  removeSelectedOutfitItem = async (itemOutfitId) => {
-    const copyAllItemsInAllOutfits = [...this.state.allItemsInAllOutfits]
-    const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
 
-    // fetch call to api backend to DELETE
-    await this.removeSelectedOutfitItemInDatabase(itemOutfitId)
+  addSelectedOutfitItem = async (itemWithCoordinates) => {
+    // call to backend to POST
+    const newItemWithCoordinates = await this.addSelectedOutfitItemInDatabase(itemWithCoordinates)
+    await this.props.getItems();
+    await this.getItemsInOutfits()
+    this.getSelectedOutfitItems(this.state.idOfOutfitToBeEdited)
 
-    // remove
-    const findIndexInAll = this.state.allItemsInAllOutfits.findIndex(item => item.id === itemOutfitId)
-    console.log(findIndexInAll)
-    const findIndexInSelected = this.state.selectedOutfitItems.findIndex(item => item.id === itemOutfitId)
+    // // update in state
+    // const copyAllItemsInAllOutfits = [...this.state.allItemsInAllOutfits]
+    // const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
+    // copyAllItemsInAllOutfits.push(newItemWithCoordinates)
+    // copySelectedOutfitItems.push(newItemWithCoordinates)
 
-    copyAllItemsInAllOutfits.splice(findIndexInAll, 1)
-    copySelectedOutfitItems.splice(findIndexInSelected, 1)
+    // this.setState({
+    //   allItemsInAllOutfits: copyAllItemsInAllOutfits,
+    //   selectedOutfitItems: copySelectedOutfitItems
+    // }, () => {
+    //   console.log('newItemWithCoordinates is ', newItemWithCoordinates)
+    //   console.log('selectedOutfitItems are ', this.state.selectedOutfitItems)
+    // })
+  }
 
+  removeSelectedOutfitItem = async (itemOutfit) => {
+    // call to backend to DELETE
+    await this.removeSelectedOutfitItemInDatabase(itemOutfit.id)
+    await this.props.getItems();
+    await this.getItemsInOutfits()
+    this.getSelectedOutfitItems(this.state.idOfOutfitToBeEdited)
+
+    // update in state
+    // const copyAllItemsInAllOutfits = [...this.state.allItemsInAllOutfits]
+    // const copySelectedOutfitItems = [...this.state.selectedOutfitItems]
+
+    // console.log("itemOutfit - ", itemOutfit)
+    // this.setState({
+    //   allItemsInAllOutfits: copyAllItemsInAllOutfits.filter(io => io.id !== itemOutfit.id),
+    //   selectedOutfitItems: copySelectedOutfitItems.filter(io => io.id !== itemOutfit.id)
+    // }, () => {
+    //   console.log('after removal selectedOutfitItems is ', this.state.selectedOutfitItems)
+    //   this.getItemsInOutfits()
+    // })
+  }
+
+  editSelectedOutfitItem = (itemOutfitId, itemSizePosition) => {
+    // call to backend to PUT
+    this.editSelectedOutfitItemInDatabase(itemOutfitId, itemSizePosition)
+
+    // update in state
+    //
+    const allItemsClone = [...this.state.allItemsInAllOutfits];
+    const selectedItemsClone = [...this.state.selectedOutfitItems];
+    const modifiedItemIndex = this.state.allItemsInAllOutfits.findIndex(item => item.id === itemOutfitId);
+    const modifiedItemIndexInSelected = this.state.selectedOutfitItems.findIndex(item => item.id === itemOutfitId)
+    const oldItem = this.state.allItemsInAllOutfits[modifiedItemIndex];
+    const oldItemInSelected = this.state.selectedOutfitItems[modifiedItemIndexInSelected]
+    allItemsClone[modifiedItemIndex] = {
+      ...oldItem,
+      ...itemSizePosition
+    };
+    selectedItemsClone[modifiedItemIndexInSelected] = {
+      ...oldItemInSelected,
+      ...itemSizePosition
+    }
     this.setState({
-      allItemsInAllOutfits: copyAllItemsInAllOutfits,
-      selectedOutfitItems: copySelectedOutfitItems
-    })
+      allItemsInAllOutfits: allItemsClone,
+      selectedOutfitItems: selectedItemsClone
+    });
   }
 
   // get all items in all outfits for user from backend
@@ -244,10 +296,11 @@ class Outfits extends Component {
             this.state.idOfOutfitToBeEdited != -1 ?
 
             <>
-              <OutfitBox idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems}/>
+              <OutfitBox idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} deleteOutfit={this.deleteOutfit} editSelectedOutfitItem={this.editSelectedOutfitItem}/>
               <div className="categories-with-items-container">
                 <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
-                <SelectableCategory categoriesWithItems={this.props.categoriesWithItems} idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} addSelectedOutfitItem={this.addSelectedOutfitItem} removeSelectedOutfitItem={this.removeSelectedOutfitItem} />
+                <SelectableCategory categoriesWithItems={this.props.categoriesWithItems} idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} addSelectedOutfitItem={this.addSelectedOutfitItem} removeSelectedOutfitItem={this.removeSelectedOutfitItem}
+                editSelectedOutfitItem={this.editSelectedOutfitItem} />
               </div>
             </>
 
