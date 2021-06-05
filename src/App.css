@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-/* .row {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-} */
-
-/* .container img {
-  width: 100%;
-  height: auto;
-} */
-
 /* home page */
 .home-image {
   position: relative;
@@ -94,7 +83,6 @@
 
 /* header */
 .navbar {
-  background-color: white !important;
   margin-bottom: 30px;
 }
 
