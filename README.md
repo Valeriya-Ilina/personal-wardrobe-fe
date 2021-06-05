@@ -41,4 +41,5 @@ I created Personal Wardrobe application to help people to take full advantage of
 * User will be able to track expences for clothes.
 
 ## Wireframes
-![picture](/wireframes | width=500)
+![wireframes](https://user-images.githubusercontent.com/59905206/120893536-cf3b1000-c5e1-11eb-9cab-79295e237c1a.jpeg)
+
