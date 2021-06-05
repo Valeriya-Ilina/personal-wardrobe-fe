@@ -41,13 +41,13 @@ class SelectableImage extends Component {
     return(
       <>
         <ToggleButton
-          className="mb-2"
+          className="outfit-item-select-btn mb-2"
           id={`toggleCheck-${this.props.categoryIndex}-${this.props.itemIndex}`}
           type="checkbox"
           variant="outline-primary"
           checked={this.props.checked}
           // value="1" not sure if it's needed
-          
+
         >
           <img onClick={this.selectImage} src={this.props.item.imageUrl} className="item-image-in-outfit" key={`${this.props.categoryIndex}-${this.props.itemIndex}`} alt={this.props.item.name} />
         </ToggleButton>

@@ -14,7 +14,6 @@ class OutfitBox extends Component {
   render() {
     return (
       <>
-        {this.props.selectedOutfitItems.length ? "" : <Button onClick={() => this.props.deleteOutfit()}>Detete Outfite</Button>}
         <div className="outfit-box">
 
           {

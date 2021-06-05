@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap'
+import { Button, Form, FormControl, InputGroup } from 'react-bootstrap'
 import dayjs from 'dayjs'
 
 const baseURL = process.env.REACT_APP_BASEURL
@@ -61,11 +61,13 @@ class OutfitNewForm extends Component {
       <>
         <div>
           <Form onSubmit={this.handleSubmit}>
-            <FormControl type="text" name="name" id="name" onChange={this.handleChange} value={this.state.name} placeholder="name" />
-            <Button type="submit">Submit</Button>
-            {
-              this.state.result ? <p>{this.state.result}</p> : ""
-            }
+            <InputGroup className="new-outfit-input mb-3">
+              <FormControl type="text" name="name" id="name" onChange={this.handleChange} value={this.state.name} placeholder="name" />
+              <Button type="submit">Submit</Button>
+            </InputGroup>
+              {
+                this.state.result ? <p>{this.state.result}</p> : ""
+              }
           </Form>
         </div>
       </>

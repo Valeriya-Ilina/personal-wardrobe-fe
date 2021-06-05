@@ -20,26 +20,27 @@ class ItemsWishList extends Component {
     })
 
     return(
-      <>
+      <div class='container'>
         <div class="items-wish-list-container">
           <h1>Wish list items</h1>
-          <Button onClick={this.props.handleShow} id="add-new-item-btn">Add New Item</Button>
+          <Button onClick={this.props.handleShow} id="add-new-item-btn" variant="dark">Add New Item</Button>
           {
             categoriesWithItemsWishList.map((category, idx) => {
               return (
                 <Container key={idx}>
                   <Row>
                     <div>
-                      <h3>{category.category_name}</h3>
+                      <h3 class="category-name">{category.category_name}</h3>
                       <div class="category-items">
                       {
                         category.items.map((item, idx) => {
                           return (
                             <div class="item" key={idx} >
-                              <img class='item-image' src={item.imageUrl} alt={item.name} />
+                              <Button onClick={()=>this.props.editItem(item)} variant="dark" id="edit-item-btn">
+                                <img class='item-image' src={item.imageUrl} alt={item.name} />
+                              </Button>
                               <p>${item.price}</p>
-                              <a href={item.itemInStoreUrl}>Go to store</a>
-                              <button onClick={()=>this.props.editItem(item)}>Edit</button>
+                              <Button href={item.itemInStoreUrl} variant="link">Go to {item.brand} store</Button>
                             </div>
                           )
                         })
@@ -56,7 +57,7 @@ class ItemsWishList extends Component {
         <div>
           <SideMenu showOffcanvas={this.props.showOffcanvas} getItems={this.props.getItems} handleClose={this.props.handleClose} categories={this.props.categories} createCategory={this.props.createCategory} itemCurrentlyBeingEdited={this.props.itemCurrentlyBeingEdited} editItem={this.props.editItem}  deleteItemFromState={this.props.deleteItemFromState} is_purchased={this.props.is_purchased} />
         </div>
-      </>
+      </div>
     )
   }
 }

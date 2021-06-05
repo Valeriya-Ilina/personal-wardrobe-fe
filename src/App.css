@@ -60,22 +60,32 @@
   height: 450px;
 }
 
-
-
 .category-items {
   display: flex;
   flex-wrap: wrap;
 }
 
 .item-image {
-  width: 300px;
-  height: 300px;
+  max-height: 300px;
+}
+
+#edit-item-btn {
+  background-color: white;
+  border-width: 0px;
 }
 
 #add-new-item-btn {
   display: block;
-
 }
+
+.category-name {
+  margin-top: 50px;
+}
+
+.item > p {
+  margin-bottom: 0px;
+}
+
 #items-wish-list-container {
   display: flex;
 }
@@ -85,6 +95,7 @@
 /* header */
 .navbar {
   background-color: white !important;
+  margin-bottom: 30px;
 }
 
 #username-text {
@@ -110,6 +121,10 @@
   background-color: Transparent;
 }
 
+.delete-item-btn {
+  margin-left: 30px;
+}
+
 
 /* outfit page */
 .outfit-box {
@@ -121,6 +136,7 @@
 
 .item-image-in-outfit {
   width: 100px;
+  border: none;
 }
 
 .image-in-box {
@@ -128,6 +144,33 @@
   min-height: 100%;
   pointer-events: none;
 }
+
+.outfit-name-btn {
+  color: black !important;
+}
+
+#add-new-outfit-btn {
+  margin: 20px auto 20px auto;
+}
+
+#delete-outfit-btn {
+  margin-left: 50px;
+}
+
+.new-outfit-input {
+  margin: 10px auto 10px auto;
+  max-width: 500px;
+}
+
+.categories-with-items-container {
+  margin-top: 30px;
+}
+
+.outfit-item-select-btn, .btn-check {
+  background-color: yellow;
+  border: none !important;
+}
+
 
 
 /* custom styles for form elements */
@@ -144,6 +187,7 @@
 /* footer */
 .footer {
   position: absolute;
+  margin-top: 100px;
   /* bottom: 0; */
   width: 100%;
 }

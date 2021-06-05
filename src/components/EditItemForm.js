@@ -179,7 +179,7 @@ class EditItemForm extends Component {
           <div className="mb-3">* is a required field</div>
         </Form.Text>
         <Button variant="success" type="submit" className="mb-3">Submit</Button>
-        <Button onClick={ ()=>this.deleteItem(this.props.itemCurrentlyBeingEdited?.id) } variant="danger" className="mb-3">Delete Item</Button>
+        <Button onClick={ ()=>this.deleteItem(this.props.itemCurrentlyBeingEdited?.id) } variant="danger" className="delete-item-btn mb-3">Delete Item</Button>
         <p>{this.state.formSubmitStatus}</p>
       </Form>
     )

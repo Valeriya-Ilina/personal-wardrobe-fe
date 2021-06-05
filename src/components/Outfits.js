@@ -274,19 +274,19 @@ class Outfits extends Component {
   render() {
     console.log(this.state)
     return(
-      <div>
+      <div class="container">
         <h1>Outfits</h1>
         <div className="outfits-container">
-          <h3>Outfit list</h3>
           {
             this.state.outfits.map((outfit, idx) => {
               return (
-                <button key={idx} onClick={() => this.editOutfit(outfit)}>{outfit.name}</button>
+                <Button key={idx} className="outfit-name-btn" onClick={() => this.editOutfit(outfit)} variant="link">{outfit.name}</Button>
               )
             })
           }
           <div>
-            <Button onClick={this.showOutfitNewForm}>add new outfit</Button>
+            <Button onClick={this.showOutfitNewForm} variant="outline-dark" id="add-new-outfit-btn">add new outfit</Button>
+            {this.state.selectedOutfitItems.length ? "" : <Button onClick={() => this.deleteOutfit()} variant="light" id="delete-outfit-btn">Detete current outfit</Button>}
             {
               this.state.isOutfitNewFormOpen ? <OutfitNewForm addOutfit={this.addOutfit}/> : ""
             }
@@ -298,7 +298,6 @@ class Outfits extends Component {
             <>
               <OutfitBox idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} deleteOutfit={this.deleteOutfit} editSelectedOutfitItem={this.editSelectedOutfitItem}/>
               <div className="categories-with-items-container">
-                <h3>Categories with items list for {this.state.idOfOutfitToBeEdited}</h3>
                 <SelectableCategory categoriesWithItems={this.props.categoriesWithItems} idOfOutfitToBeEdited={this.state.idOfOutfitToBeEdited} selectedOutfitItems={this.state.selectedOutfitItems} addSelectedOutfitItem={this.addSelectedOutfitItem} removeSelectedOutfitItem={this.removeSelectedOutfitItem}
                 editSelectedOutfitItem={this.editSelectedOutfitItem} />
               </div>
